@@ -1,15 +1,7 @@
 from datetime import datetime
-from numpy import genfromtxt
 import csv
 import os
-import pandas as pd
-import dataframe_image as dfi
 import requests
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.table import Table
-from IPython.display import display, HTML
-
 
 def get_turkish_articles():
     print("Fetching Turkish articles...")
