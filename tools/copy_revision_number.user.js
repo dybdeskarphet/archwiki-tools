@@ -6,6 +6,9 @@
 // @author       Ahmet Arda Kavakcı
 // @match        *://wiki.archlinux.org/*
 // @grant        GM_addStyle
+// @downloadURL https://github.com/dybdeskarphet/archwiki-tools/raw/main/tools/copy_revision_number.user.js
+// @supportURL https://github.com/dybdeskarphet/archwiki-tools
+// @updateURL https://github.com/dybdeskarphet/archwiki-tools/raw/main/tools/copy_revision_number.user.js
 // ==/UserScript==
 
 (function () {
