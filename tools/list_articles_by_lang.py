@@ -1,6 +1,14 @@
-import requests
-import csv
 from datetime import datetime
+from numpy import genfromtxt
+import csv
+import os
+import pandas as pd
+import dataframe_image as dfi
+import requests
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.table import Table
+from IPython.display import display, HTML
 
 
 def get_turkish_articles():
@@ -104,12 +112,29 @@ def get_last_revision_info(pageid):
 
 
 def write_to_csv(articles, filename="turkish_articles.csv"):
-    keys = articles[0].keys()
-    with open(filename, "w", newline="", encoding="utf-8") as output_file:
-        dict_writer = csv.DictWriter(output_file, keys)
-        dict_writer.writeheader()
-        dict_writer.writerows(articles)
-    print(f"Data written to {filename}")
+    with open(filename, "r", encoding="utf-8") as csv_file:
+        reader = csv.DictReader(csv_file)
+        data = list(reader)
+
+    wiki_filename = filename.replace(".csv", ".wiki")
+    with open(wiki_filename, "w", encoding="utf-8") as wiki_file:
+        wiki_file.write(
+            '{| class="wikitable"\n! Title !! Timestamp !! User !! Comment\n'
+        )
+        for row in data:
+            wiki_row = "|-\n| " + " || ".join(row.values()) + "\n"
+            wiki_file.write(wiki_row)
+        wiki_file.write("|}\n")
+
+    md_filename = filename.replace(".csv", ".md")
+    with open(md_filename, "w", encoding="utf-8") as md_file:
+        md_file.write("| Title | Timestamp | User | Comment |\n")
+        md_file.write("|---|---|---|---|\n")
+        for row in data:
+            md_row = "| " + " | ".join(row.values()) + " |\n"
+            md_file.write(md_row)
+
+    print(f"Data written to {filename}, {wiki_filename}, and {md_filename}")
 
 
 def main():
