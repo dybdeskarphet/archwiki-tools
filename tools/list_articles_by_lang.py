@@ -102,19 +102,20 @@ def get_last_revision_info(pageid):
         print(f"Error fetching revision info for page {pageid}: {e}")
         return None
 
-
 def write_to_csv(articles, filename="turkish_articles.csv"):
-    with open(filename, "r", encoding="utf-8") as csv_file:
-        reader = csv.DictReader(csv_file)
-        data = list(reader)
+
+    with open(filename, "w", encoding="utf-8") as csv_file:
+        fieldnames = ["title", "timestamp", "user", "comment"]  
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for article in articles:
+            writer.writerow(article)
 
     wiki_filename = filename.replace(".csv", ".wiki")
     with open(wiki_filename, "w", encoding="utf-8") as wiki_file:
-        wiki_file.write(
-            '{| class="wikitable"\n! Title !! Timestamp !! User !! Comment\n'
-        )
-        for row in data:
-            wiki_row = "|-\n| " + " || ".join(row.values()) + "\n"
+        wiki_file.write('{| class="wikitable"\n! Title !! Timestamp !! User !! Comment\n')
+        for article in articles:
+            wiki_row = f"|-\n| {article['title']} || {article['timestamp']} || {article['user']} || {article['comment']}\n"
             wiki_file.write(wiki_row)
         wiki_file.write("|}\n")
 
@@ -122,12 +123,11 @@ def write_to_csv(articles, filename="turkish_articles.csv"):
     with open(md_filename, "w", encoding="utf-8") as md_file:
         md_file.write("| Title | Timestamp | User | Comment |\n")
         md_file.write("|---|---|---|---|\n")
-        for row in data:
-            md_row = "| " + " | ".join(row.values()) + " |\n"
+        for article in articles:
+            md_row = f"| {article['title']} | {article['timestamp']} | {article['user']} | {article['comment']} |\n"
             md_file.write(md_row)
 
     print(f"Data written to {filename}, {wiki_filename}, and {md_filename}")
-
 
 def main():
     turkish_articles = get_turkish_articles()
