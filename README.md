@@ -33,7 +33,7 @@ A Python script that automates the process of fetching and saving the source of 
 
 Run the script with a list of desired article titles. The script fetches and saves the articles in the appropriate language directory.
 
-### 3. ArchWiki Turkish Articles Tracker 🇹🇷
+### 3. ArchWiki Turkish Articles Tracker 🔎
 
 A Python script to track the latest changes in Turkish articles on ArchWiki. It fetches a list of all Turkish articles, retrieves the last non-bot revision for each, and exports the data to a CSV file.
 
